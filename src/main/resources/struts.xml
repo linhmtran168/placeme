@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+    <constant name="struts.enable.DynamicMethodInvocation" value="false"/>
+
+    <package name="myPackage" extends="struts-default">
+
+        <default-action-ref name="index" />
+
+        <action name="index" class="indexAction">
+            <result>/jsp/index.jsp</result>
+        </action>
+
+        <action name="postLogin" class="loginAction" method="postLogin">
+            <result type="json">
+                <param name="noCache">true</param>
+		        <param name="excludeNullProperties">true</param>
+		        <param name="root">responseJson</param>
+            </result>
+        </action>
+
+        <action name="postRegister" class="registerAction" method="registerAction">
+            <result type="json">
+                <param name="noCache">true</param>
+		        <param name="excludeNullProperties">true</param>
+		        <param name="root">responseJson</param>
+            </result>
+        </action>
+    </package>
+    
+    <package name="ajax" extends="struts-default" namespace="/ajax">
+        <action name="register" class="registerAction">
+            <result>/jsp/partials/register.jsp</result>
+        </action>
+
+        <action name="login" class="loginAction">
+            <result>/jsp/partials/login.jsp</result>
+        </action>
+    </package>
+    
+
+</struts>
