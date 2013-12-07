@@ -15,12 +15,13 @@
  */
 package me.linh.placeme.util;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Map;
+
 import org.apache.struts2.util.StrutsTypeConverter;
 
-import java.text.SimpleDateFormat;
-import java.text.ParseException;
-import java.util.Map;
-import java.util.Date;
 import com.opensymphony.xwork2.conversion.TypeConversionException;
 
 /**

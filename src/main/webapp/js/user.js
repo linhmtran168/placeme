@@ -1,19 +1,27 @@
 /**
  * User module
  */
-define(['jquery', 'jquery.bootstrap', 'util'], function($, bootstrap, util) {
-	
+define(['jquery', 'util', 'jquery.bootstrap', 'bootbox'], function($, util) {
 	
 	return {
 		/**
 		 * Init function
 		 */
 		init: function() {
-			// Handle user sign in popup
-			$('#user-signin').click(function() {
+			this.handleRegister();
+			this.handleSignin();
+		},
+		
+		/**
+		 * Handle Register
+		 */
+		handleRegister: function() {
+			
+			// Handle user sign up popup
+			$('#user-signup').click(function() {
 				util.loadAjaxPage($(this).data('href'));
 			});
-			
+
 			// Handle when user click register
 			$(document).on('click', "#register", function() {
 				var url = $('#register-form').attr('action');
@@ -23,17 +31,30 @@ define(['jquery', 'jquery.bootstrap', 'util'], function($, bootstrap, util) {
 						email: $('#register-form #email').val(),
 				};
 				
-
+				// Send request to server
 				$.post(url, data, function(res) {
-					console.log(res);
+					util.closeModal();
+					// Success
+					if (res.status === 1) {
+						bootbox.alert("Registration is successful, please login");
+					} else { // Error
+						bootbox.alert("Registration failed. Please try again");
+					}
 				});
 			});
 
-			// Handle user sign up popup
-			$('#user-signup').click(function() {
+		},
+		
+		/**
+		 * Handle Signin
+		 */
+		handleSignin: function() {
+			// Handle user sign in popup
+			$('#user-signin').click(function() {
 				util.loadAjaxPage($(this).data('href'));
 			});
-		},
+			
+		}
 		
 	};
 });

@@ -37,4 +37,13 @@ public class UserService {
 		
 		return !(userDao.findByEmail(email) == null);
 	}
+	
+	/**
+	 * Check username exist or not
+	 * @param username
+	 * @return
+	 */
+	public Boolean userExist(String username) {
+		return !(userDao.findByUsername(username) == null);
+	}
 }

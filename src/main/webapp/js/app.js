@@ -6,13 +6,16 @@ requirejs.config({
 		"jquery.bootstrap": "../lib/bootstrap/js/bootstrap.min",
 		"jquery.bootstrap.modalmanager": "../lib/bootstrap-modal/js/bootstrap-modalmanager",
 		"jquery.bootstrap.modal": "../lib/bootstrap-modal/js/bootstrap-modal",
-		"leaflet": "//cdn.leafletjs.com/leaflet-0.7/leaflet"
+		"leaflet": "//cdn.leafletjs.com/leaflet-0.7/leaflet",
+		"bootbox": "../lib/bootbox.min"
 	},
 	"shim": {
         "jquery.bootstrap": ["jquery"],
         "jquery.bootstrap.modalmanager": ["jquery"],
-        "jquery.bootstrap.modal": ["jquery"]
-    }
+        "jquery.bootstrap.modal": ["jquery"],
+        "bootbox": ["jquery", "jquery.bootstrap"]
+    },
+    urlArgs: 'v=1.0'
 });
 
 require(['jquery', 'jquery.bootstrap', 'map', 'user', 'util'], function($, bootsrap, map, user, util) {

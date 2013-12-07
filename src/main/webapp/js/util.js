@@ -19,6 +19,14 @@ define(['jquery', 'jquery.bootstrap', 'jquery.bootstrap.modalmanager', 'jquery.b
 			$modal.load(url, '', function() {
 				$modal.modal();
 			});
+			
+			return $modal;
+		},
+		
+		closeModal: function(modalId) {
+			var $modal = modalId ? $(modalId) : $(_modalId);
+			$modal.modal('destroy');
+			$('.modal-scrollable').remove();
 		},
 		
 		/**

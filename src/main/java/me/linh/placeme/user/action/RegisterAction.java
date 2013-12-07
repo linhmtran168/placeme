@@ -7,8 +7,6 @@ import me.linh.placeme.persistence.model.User;
 import me.linh.placeme.persistence.service.UserService;
 import me.linh.placeme.util.Helper;
 
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.ObjectWriter;
 import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -38,19 +36,19 @@ public class RegisterAction extends ActionSupport {
 	/**
 	 * Response for Ajax Request;
 	 */
-	private Object responseJson;
+	private Map<String, Object> responseJson = new HashMap<String, Object>();
 
 	/**
 	 * @return the responseJson
 	 */
-	public Object getResponseJson() {
+	public Map<String, Object> getResponseJson() {
 		return responseJson;
 	}
 
 	/**
 	 * @param responseJson the responseJson to set
 	 */
-	public void setResponseJson(String responseJson) {
+	public void setResponseJson(Map<String, Object> responseJson) {
 		this.responseJson = responseJson;
 	}
 
@@ -104,7 +102,11 @@ public class RegisterAction extends ActionSupport {
 	public void validate() {
 		if (getUsername().length() == 0) {
 			addFieldError("username", "User Name is required");
-		} 
+		} else if (!helper.checkValidUsername(getUsername())) {
+			addFieldError("username", "User Name is not valid");
+		} else if (userService.userExist(getUsername())) {
+			addFieldError("username", "User Name existed");
+		}
 		
 		
 		if(getEmail().length() == 0) {
@@ -115,7 +117,7 @@ public class RegisterAction extends ActionSupport {
 			addFieldError("email", "Email already exists");
 		}
 
-		if (getPassword().length() == 0) {
+		if (getPassword().length() == 0 || getPassword().length() < 6) {
 			addFieldError("password", getText("Password is required"));
 		}
 	}
@@ -127,24 +129,15 @@ public class RegisterAction extends ActionSupport {
 		// New user object
 		User user = new User(this.username, this.email, this.password);
 		// Mapping for response object
-		Map<String, Object> responseMap = new HashMap<String, Object>();
 		
 		// Create new user
 		try {
 			Long userId = userService.createUser(user);
-			responseMap.put("status", 1);
-			responseMap.put("userId", userId);
-
-			// Change the map to a Json String
-//			ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-//			this.responseJson = ow.writeValueAsString(responseMap);
-		    this.responseJson = responseMap;
+			responseJson.put("status", 1);
+			responseJson.put("userId", userId);
 
 		} catch (HibernateException exception) {
-			responseMap.put("status", 0);
-//			ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-//			this.responseJson = ow.writeValueAsString(responseMap);
-			this.responseJson = responseMap;
+			responseJson.put("status", 0);
 		} 
 
 		return SUCCESS;
