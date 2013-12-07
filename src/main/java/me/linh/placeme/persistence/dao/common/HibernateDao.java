@@ -9,13 +9,13 @@ import java.util.List;
  *
  * @param <T> Type of object
  */
-public interface IHibernateDao<T extends Serializable> {
+public interface HibernateDao<T extends Serializable> {
 
     T findOne(final long id);
 
     List<T> findAll();
 
-    T create(final T entity);
+    Object create(final T entity);
 
     T update(final T entity);
 

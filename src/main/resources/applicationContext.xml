@@ -2,30 +2,35 @@
 <beans xmlns="http://www.springframework.org/schema/beans" 
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
     xmlns:context="http://www.springframework.org/schema/context" 
+    xmlns:tx="http://www.springframework.org/schema/tx"
     xsi:schemaLocation="
     http://www.springframework.org/schema/beans
     http://www.springframework.org/schema/beans/spring-beans.xsd
     http://www.springframework.org/schema/context
-    http://www.springframework.org/schema/context/spring-context.xsd">
+    http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx.xsd" >
     
+    <tx:annotation-driven transaction-manager="transactionManager" />
     <context:property-placeholder location="classpath:me/linh/placeme/database.properties" />
+    <context:component-scan base-package="me.linh.placeme"/>
 
-	<!-- Struts Action -->
-    <bean id="indexAction" class="me.linh.placeme.staticpage.action.IndexAction" />
-
-    <bean id="registerAction" class="me.linh.placeme.user.action.RegisterAction" />
-    <bean id="loginAction" class="me.linh.placeme.user.action.LoginAction" />
     
     <!-- Database configuration Spring + Hibernate -->
     <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
       <property name="dataSource" ref="dataSource" />
-      <property name="packagesToScan" value="linh.me.persistence.model" />
+      <property name="packagesToScan" value="me.linh.persistence.model" />
       <property name="hibernateProperties">
          <props>
             <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
             <prop key="hibernate.dialect">${hibernate.dialect}</prop>
          </props>
       </property>
+      <property name="mappingDirectoryLocations">
+	       <list>
+	           <value>classpath*:me/linh/placeme/model</value>
+	       </list>
+        </property>
    </bean>
 
    <bean id="dataSource" class="org.apache.tomcat.dbcp.dbcp.BasicDataSource">
@@ -35,10 +40,27 @@
       <property name="password" value="${jdbc.pass}" />
    </bean>
 
-   <bean id="txManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+   <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
       <property name="sessionFactory" ref="sessionFactory" />
    </bean>
 
    <bean id="persistenceExceptionTranslationPostProcessor" class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
+
+	<!-- Struts Action -->
+    <bean id="indexAction" class="me.linh.placeme.staticpage.action.IndexAction" />
+
+    <bean id="registerAction" class="me.linh.placeme.user.action.RegisterAction" />
+    
+    <bean id="loginAction" class="me.linh.placeme.user.action.LoginAction" />
+
+   
+   <!-- DAO -->
+   <bean id="userDao" class="me.linh.placeme.persistence.dao.impl.UserDaoImpl"></bean>
+   
+   <!-- Service -->
+   <bean id="userService" class="me.linh.placeme.persistence.service.UserService"></bean>
+   
+   <!-- Util -->
+   <bean id="helper" class="me.linh.placeme.util.Helper"></bean>
 </beans>
 

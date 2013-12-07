@@ -1,6 +1,6 @@
 package me.linh.placeme.persistence.dao;
 
-import me.linh.placeme.persistence.dao.common.AbstractHibernateDao;
+import me.linh.placeme.persistence.dao.common.HibernateDao;
 import me.linh.placeme.persistence.model.User;
 
 /**
@@ -8,10 +8,8 @@ import me.linh.placeme.persistence.model.User;
  * @author linhtran
  * 
  */
-public class UserDao extends AbstractHibernateDao<User> {
+public interface UserDao extends HibernateDao<User> {
 
-	public UserDao() {
-		super();
-		setClazz(User.class);
-	}
+	public User findByEmail(String email);
+	public User findByUsername(String username);
 }

@@ -1,6 +1,7 @@
 package me.linh.placeme.persistence.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class User implements Serializable {
 
@@ -12,6 +13,7 @@ public class User implements Serializable {
 	private String username;
 	private String email;
 	private String password;
+	private Date createdDate;
 	
 	/**
 	 * Constructor
@@ -72,5 +74,13 @@ public class User implements Serializable {
 	 */
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
 	}
 }

@@ -15,7 +15,10 @@
             <result>/jsp/index.jsp</result>
         </action>
 
-        <action name="postLogin" class="loginAction" method="postLogin">
+    </package>
+    
+    <package name="jsonPackage" extends="json-default" namespace="/ajax">
+        <action name="postLogin" class="loginAction" method="execute">
             <result type="json">
                 <param name="noCache">true</param>
 		        <param name="excludeNullProperties">true</param>
@@ -23,7 +26,7 @@
             </result>
         </action>
 
-        <action name="postRegister" class="registerAction" method="registerAction">
+        <action name="postRegister" class="registerAction" method="execute">
             <result type="json">
                 <param name="noCache">true</param>
 		        <param name="excludeNullProperties">true</param>
@@ -33,11 +36,11 @@
     </package>
     
     <package name="ajax" extends="struts-default" namespace="/ajax">
-        <action name="register" class="registerAction">
+        <action name="register">
             <result>/jsp/partials/register.jsp</result>
         </action>
 
-        <action name="login" class="loginAction">
+        <action name="login">
             <result>/jsp/partials/login.jsp</result>
         </action>
     </package>

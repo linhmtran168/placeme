@@ -6,6 +6,8 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.base.Preconditions;
 
@@ -16,7 +18,9 @@ import com.google.common.base.Preconditions;
  * @param <T>
  */
 @SuppressWarnings("unchecked")
-public abstract class AbstractHibernateDao<T extends Serializable> implements IHibernateDao<T> {
+@Transactional
+@Repository
+public abstract class HibernateDaoImpl<T extends Serializable> implements HibernateDao<T> {
 
 	private Class<T> clazz;
 
@@ -37,10 +41,10 @@ public abstract class AbstractHibernateDao<T extends Serializable> implements IH
         return getCurrentSession().createQuery("from " + clazz.getName()).list();
     }
 
-    public final T create(final T entity) {
+    public final Object create(final T entity) {
         Preconditions.checkNotNull(entity);
         // getCurrentSession().persist(entity);
-        return (T) getCurrentSession().save(entity);
+        return getCurrentSession().save(entity);
     }
 
     public final T update(final T entity) {
@@ -61,5 +65,9 @@ public abstract class AbstractHibernateDao<T extends Serializable> implements IH
 
     protected final Session getCurrentSession() {
         return sessionFactory.getCurrentSession();
+    }
+    
+    public void setSessionFactory(SessionFactory sessionFactory) {
+    	this.sessionFactory = sessionFactory;
     }
 }
