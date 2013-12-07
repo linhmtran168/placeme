@@ -11,7 +11,6 @@ define(['jquery', 'jquery.bootstrap', 'jquery.bootstrap.modalmanager', 'jquery.b
 		 * @param String modalId the dom Id of the modal
 		 */
 		loadAjaxPage: function(url, modalId) {
-			this.fixModalBs3();
 
 			var $modal = modalId ? $(modalId) : $(_modalId);
 			

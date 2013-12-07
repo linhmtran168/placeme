@@ -38,12 +38,12 @@ public class RegisterAction extends ActionSupport {
 	/**
 	 * Response for Ajax Request;
 	 */
-	private String responseJson;
+	private Object responseJson;
 
 	/**
 	 * @return the responseJson
 	 */
-	public String getResponseJson() {
+	public Object getResponseJson() {
 		return responseJson;
 	}
 
@@ -106,6 +106,7 @@ public class RegisterAction extends ActionSupport {
 			addFieldError("username", "User Name is required");
 		} 
 		
+		
 		if(getEmail().length() == 0) {
 			addFieldError("email", "Email is required");
 		} else if (!helper.checkValidEmail(getEmail())) {
@@ -115,7 +116,7 @@ public class RegisterAction extends ActionSupport {
 		}
 
 		if (getPassword().length() == 0) {
-			addFieldError("password", getText("password.required"));
+			addFieldError("password", getText("Password is required"));
 		}
 	}
 
@@ -128,21 +129,6 @@ public class RegisterAction extends ActionSupport {
 		// Mapping for response object
 		Map<String, Object> responseMap = new HashMap<String, Object>();
 		
-		if (getUsername().length() == 0) {
-			addFieldError("username", "User Name is required");
-		} 
-		
-		if(getEmail().length() == 0) {
-			addFieldError("email", "Email is required");
-		} else if (!helper.checkValidEmail(getEmail())) {
-			addFieldError("email", "Not a valid email");
-		} else if (userService.emailExist(getEmail())) {
-			addFieldError("email", "Email already exists");
-		}
-
-		if (getPassword().length() == 0) {
-			addFieldError("password", getText("password.required"));
-		}
 		// Create new user
 		try {
 			Long userId = userService.createUser(user);
@@ -150,13 +136,15 @@ public class RegisterAction extends ActionSupport {
 			responseMap.put("userId", userId);
 
 			// Change the map to a Json String
-			ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-			this.responseJson = ow.writeValueAsString(responseMap);
+//			ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+//			this.responseJson = ow.writeValueAsString(responseMap);
+		    this.responseJson = responseMap;
 
 		} catch (HibernateException exception) {
 			responseMap.put("status", 0);
-			ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-			this.responseJson = ow.writeValueAsString(responseMap);
+//			ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+//			this.responseJson = ow.writeValueAsString(responseMap);
+			this.responseJson = responseMap;
 		} 
 
 		return SUCCESS;

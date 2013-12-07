@@ -15,7 +15,9 @@ requirejs.config({
     }
 });
 
-require(['jquery', 'jquery.bootstrap', 'map', 'user'], function($, bootsrap, map, user) {
+require(['jquery', 'jquery.bootstrap', 'map', 'user', 'util'], function($, bootsrap, map, user, util) {
+	// Fix modal error
+	util.fixModalBs3();
 	// Init map
 	map.init();
 	// Init user module

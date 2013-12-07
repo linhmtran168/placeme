@@ -5,7 +5,7 @@
   <h4 class="modal-title" id="myModalLabel">Register</h4>
 </div>
 <div class="modal-body">
-    <s:url action="postRegister" var="#postResUrl"></s:url>
+    <s:url action="postRegister" var="#postResUrl" namespace="/"></s:url>
 	<form id="register-form" class="form-horizontal" action="<s:property value='#postResUrl' />" role="form">
 	  <div class="form-group">
 	    <label for="email" class="col-sm-2 control-label">Email</label>

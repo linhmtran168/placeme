@@ -16,6 +16,12 @@ public class User implements Serializable {
 	private Date createdDate;
 	
 	/**
+	 * Default constructor
+	 */
+	public User() {
+		
+	}
+	/**
 	 * Constructor
 	 * @param username
 	 * @param email

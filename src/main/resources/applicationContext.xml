@@ -47,18 +47,18 @@
    <bean id="persistenceExceptionTranslationPostProcessor" class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
 
 	<!-- Struts Action -->
-    <bean id="indexAction" class="me.linh.placeme.staticpage.action.IndexAction" />
+    <bean id="indexAction" class="me.linh.placeme.staticpage.action.IndexAction" scope="prototype"/>
 
-    <bean id="registerAction" class="me.linh.placeme.user.action.RegisterAction" />
+    <bean id="registerAction" class="me.linh.placeme.user.action.RegisterAction" scope="prototype"/>
     
-    <bean id="loginAction" class="me.linh.placeme.user.action.LoginAction" />
+    <bean id="loginAction" class="me.linh.placeme.user.action.LoginAction" scope="prototype"/>
 
    
    <!-- DAO -->
    <bean id="userDao" class="me.linh.placeme.persistence.dao.impl.UserDaoImpl"></bean>
    
    <!-- Service -->
-   <bean id="userService" class="me.linh.placeme.persistence.service.UserService"></bean>
+   <bean id="userService" class="me.linh.placeme.persistence.service.UserService" scope="prototype"></bean>
    
    <!-- Util -->
    <bean id="helper" class="me.linh.placeme.util.Helper"></bean>

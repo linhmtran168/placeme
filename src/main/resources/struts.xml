@@ -17,20 +17,32 @@
 
     </package>
     
-    <package name="jsonPackage" extends="json-default" namespace="/ajax">
-        <action name="postLogin" class="loginAction" method="execute">
-            <result type="json">
+    <package name="jsonPackage" extends="json-default">
+        <action name="postSignin" class="loginAction" method="execute">
+            <result type="json" name="success">
+                <param name="contentType">application/json</param>
                 <param name="noCache">true</param>
 		        <param name="excludeNullProperties">true</param>
 		        <param name="root">responseJson</param>
+            </result>
+            <result type="json" name="input">
+                <param name="contentType">application/json</param>
+                <param name="noCache">true</param>
+		        <param name="excludeNullProperties">true</param>
             </result>
         </action>
 
         <action name="postRegister" class="registerAction" method="execute">
             <result type="json">
+                <param name="contentType">application/json</param>
                 <param name="noCache">true</param>
 		        <param name="excludeNullProperties">true</param>
 		        <param name="root">responseJson</param>
+            </result>
+            <result type="json" name="input">
+                <param name="contentType">application/json</param>
+                <param name="noCache">true</param>
+		        <param name="excludeNullProperties">true</param>
             </result>
         </action>
     </package>

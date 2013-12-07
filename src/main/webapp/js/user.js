@@ -23,7 +23,6 @@ define(['jquery', 'jquery.bootstrap', 'util'], function($, bootstrap, util) {
 						email: $('#register-form #email').val(),
 				};
 				
-				console.log(data);
 
 				$.post(url, data, function(res) {
 					console.log(res);
